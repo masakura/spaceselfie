@@ -52,3 +52,12 @@
   color: white;
   z-index: 5;
 }
+
+#scope {
+  position: absolute;
+  z-index: 15;
+  background-color: azure;
+  marign: 0 auto;
+  width: 30%;
+  height: 30%;
+}

@@ -3,6 +3,16 @@ var app = {};
 (function () {
   'use strict';
 
+  window.addEventListener('deviceorientation', function(event) {
+    var degree = event.beta;
+
+    var $scope = $('#scope');
+    if (degree < 0) {
+      degree = 180 + 180 + degree;
+    }
+    $scope.css('top', (degree - 150) * 8);
+  }, false);
+
   var Map = app.Map = function () {
     this.$map = $('#map');
 
