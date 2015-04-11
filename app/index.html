@@ -21,9 +21,17 @@
 
     <div id="page">
       <div id="cross"></div>
+      <div id="picture-box">
+        <canvas id="picture"></canvas>
+      </div>
+      <div id="backpanel"></div>
+      <div id="map"></div>
       <video id="finder"></video>
       <div id="controls">
+        <button id="start" class="btn btn-primary">Start</button>
         <button id="take" class="btn btn-primary">Take!</button>
+        <button id="map-hide" class="btn btn-primary">Hide</button>
+        <button id="map-show" class="btn btn-primary">show</button>
       </div>
     </div>
 
@@ -32,6 +40,9 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBZ6xrnw-3B9UQts5gZbifFlGEFXjTNqv4&sensor=false">
+    </scrip>
 
     <!-- build:js(.) scripts/plugins.js -->
     <script src="bower_components/bootstrap/js/affix.js"></script>
