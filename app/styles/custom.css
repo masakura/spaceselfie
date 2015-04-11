@@ -61,3 +61,30 @@
   width: 30%;
   height: 30%;
 }
+#scope {
+  position: absolute;
+  z-index: 15;
+  background-color: azure;
+  marign: 0 auto;
+  width: 30%;
+  height: 30%;
+}
+
+#scope {
+  position: absolute;
+  z-index: 15;
+  background-color: azure;
+  marign: 0 auto;
+  width: 30%;
+  height: 30%;
+  display: none;
+}
+
+#satellite {
+  position: absolute;
+  z-index: 14;
+  background-color: darkgreen;
+  right: 0;
+  width: 30%;
+  height: 30%;
+}

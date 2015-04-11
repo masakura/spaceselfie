@@ -3,15 +3,60 @@ var app = {};
 (function () {
   'use strict';
 
-  window.addEventListener('deviceorientation', function(event) {
-    var degree = event.beta;
-
-    var $scope = $('#scope');
+  var calculateTop = function (degree) {
     if (degree < 0) {
       degree = 180 + 180 + degree;
     }
-    $scope.css('top', (degree - 150) * 8);
+    return (degree - 150) * 8;
+  };
+
+  window.addEventListener('deviceorientation', function(event) {
+    var degree = app.degree = event.beta;
+
+    var $scope = $('#scope');
+    $scope
+      .css('top', calculateTop(degree))
+      .show();
   }, false);
+
+  var Satellite = app.Satellite = function () {
+    this.$satellite = $('#satellite');
+  };
+
+  Satellite.prototype.start = function () {
+    var $satellite = this.$satellite;
+
+    var top = 0;
+    var id = setInterval(function () {
+      top -= 20;
+      $satellite.css('top', top);
+
+      if ($satellite.height() + top < 0) {
+        clearInterval(id);
+        $satellite.hide();
+      }
+    }, 100);
+  };
+
+  Satellite.prototype.flight = function () {
+    var $satellite = this.$satellite;
+    var degree = 130;
+
+    var id = setInterval(function () {
+      var top = 700 - (degree - app.degree) * 12;
+      console.log('degree: ' + degree + ', top: ' + top);
+      $satellite
+        .css('top', top)
+        .show();
+
+      degree++;
+
+      if (degree < 60 || degree > 300) {
+        clearInterval(id);
+        $satellite.hide();
+      }
+    }, 100);
+  };
 
   var Map = app.Map = function () {
     this.$map = $('#map');
@@ -96,6 +141,8 @@ $(document).ready(function () {
   var camera = new app.Camera();
   camera.initialize();
 
+  var satellite = new app.Satellite();
+
   $('#start').on('click', function () {
     camera.show();
   });
@@ -110,5 +157,13 @@ $(document).ready(function () {
 
   $('#map-hide').on('click', function () {
     $('#map').css('zIndex', 0);
+  });
+
+  $('#satellite-start').on('click', function () {
+    satellite.start();
+  });
+
+  $('#satellite-flight').on('click', function () {
+    satellite.flight();
   });
 });
