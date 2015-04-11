@@ -19,12 +19,15 @@ var app = {};
     navigator.getUserMedia({video: true}, function (stream) {
       console.log('VIDEO');
       $finder.attr('src', window.URL.createObjectURL(stream));
+
+      setTimeout(function () {
+        $finder[0].play();
+      });
     }, function () {});
   };
 
-  Camera.prototype.start = function () {
+  Camera.prototype.show = function () {
     this.$finder.show();
-    this.$finder[0].play();
   };
 })();
 
@@ -34,5 +37,7 @@ $(document).ready(function () {
   var camera = new app.Camera();
   camera.initialize();
 
-  camera.start();
+  $('#take').on('click', function () {
+    camera.show();
+  });
 });

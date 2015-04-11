@@ -4,6 +4,8 @@
   right: 0;
   bottom: 0;
   left: 0;
+  background-color: black;
+  color: white;
 }
 
 #finder {
@@ -12,4 +14,10 @@
   height: 30%;
   bottom: 1em;
   right: 1em;
+  display: none;
+}
+
+#controls {
+  position: absolute;
+  bottom: 1em;
 }
