@@ -171,9 +171,7 @@ var app = {};
     this.camera.initialize();
 
     this.satellite = new Satellite();
-  };
 
-  App.prototype.start = function () {
     this.camera.show();
   };
 })();
@@ -185,22 +183,12 @@ $(document).ready(function () {
   var camera = a.camera;
   var satellite = a.satellite;
 
-  a.start();
-
   $('#take').on('click', function () {
     if (satellite.isChance()) {
       camera.takeMap();
     } else {
       camera.takePicture();
     }
-  });
-
-  $('#map-show').on('click', function () {
-    camera.map.show();
-  });
-
-  $('#map-hide').on('click', function () {
-    camera.map.hide();
   });
 
   $('#satellite-start').on('click', function () {
