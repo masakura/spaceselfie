@@ -158,7 +158,12 @@ var app = {};
 
   Camera.prototype.takePicture = function () {
     var $picture = $('#picture');
+    var $finder = $('#finder');
     var context = $picture[0].getContext('2d');
+    console.log($finder[0].videoWidth);
+    console.log($finder[0].videoHeight);
+    $picture[0].width = $finder[0].videoWidth;
+    $picture[0].height = $finder[0].videoHeight;
     context.drawImage(this.$finder[0], 0, 0);
   };
 
