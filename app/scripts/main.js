@@ -41,10 +41,21 @@ var app = {};
   Satellite.prototype.flight = function () {
     var $satellite = this.$satellite;
     var degree = 130;
+    var that = this;
 
     var id = setInterval(function () {
+      that.degree = degree;
+      that.offset = degree - app.degree;
+
+      if (that.isChance()) {
+        $('#take').addClass('btn-primary');
+      } else {
+        $('#take').removeClass('btn-primary');
+      }
+
       var top = 700 - (degree - app.degree) * 12;
-      console.log('degree: ' + degree + ', top: ' + top);
+      that.top = top;
+//      console.log('chance: ' + that.isChance() + ', offset: ' + that.offset + ', degree: ' + degree + ', top: ' + top);
       $satellite
         .css('top', top)
         .show();
@@ -56,6 +67,23 @@ var app = {};
         $satellite.hide();
       }
     }, 100);
+  };
+
+  Satellite.prototype.isChance = function () {
+    var getPositon = function ($el) {
+      var offset = $el.offset();
+      return {
+        top: offset.top,
+        bottom: offset.top + $el.height()
+      };
+    };
+
+    var satellite = getPositon(this.$satellite);
+    var scope = getPositon($('#scope'));
+
+    console.log('satellite: ' + satellite);
+    console.log('scope: ' + scope);
+    return satellite.top <= scope.bottom && satellite.bottom >= scope.top;
   };
 
   var Map = app.Map = function () {
