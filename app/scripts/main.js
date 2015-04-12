@@ -10,13 +10,13 @@ var app = {};
     return (degree - 150) * 8;
   };
 
+  $('#scope').show();
+
   window.addEventListener('deviceorientation', function(event) {
     var degree = app.degree = event.beta;
 
     var $scope = $('#scope');
-    $scope
-      .css('top', calculateTop(degree))
-      .show();
+    $scope.css('top', calculateTop(degree));
   }, false);
 
   var Satellite = app.Satellite = function () {
@@ -26,12 +26,12 @@ var app = {};
   Satellite.prototype.start = function (success) {
     var $satellite = this.$satellite;
 
+    $satellite.show();
+
     var top = 0;
     var id = setInterval(function () {
       top -= 20;
-      $satellite
-        .css('top', top)
-        .show();
+      $satellite.css('top', top);
 
       if ($satellite.height() + top < 0) {
         clearInterval(id);
@@ -49,6 +49,8 @@ var app = {};
     var degree = 150;
     var that = this;
 
+    $satellite.show();
+
     var id = setInterval(function () {
       that.degree = degree;
       that.offset = degree - app.degree;
@@ -62,9 +64,7 @@ var app = {};
       var top = 700 - (degree - app.degree) * 12;
       that.top = top;
       console.log('chance: ' + that.isChance() + ', offset: ' + that.offset + ', degree: ' + degree + ', top: ' + top);
-      $satellite
-        .css('top', top)
-        .show();
+      $satellite.css('top', top);
 
       degree++;
 
@@ -178,6 +178,8 @@ var app = {};
   };
 
   var App = app.App = function () {
+    $('#take').hide();
+
     this.camera = new Camera();
     this.camera.initialize();
 
@@ -189,6 +191,12 @@ var app = {};
   App.prototype.take = function () {
     $('#shutter-sound')[0].play();
 
+    $('#take').hide();
+    $('#finder').hide();
+//    $('#scope').hide();
+//    $('#satellite').hide();
+//    $('#cross').hide();
+
     if (this.satellite.isChance()) {
       this.camera.takeMap();
     } else {
@@ -197,6 +205,9 @@ var app = {};
   };
 
   App.prototype.start = function () {
+    $('#take').show();
+    $('#satellite-start').hide();
+
     var satellite = this.satellite;
 
     satellite.start(function () {
