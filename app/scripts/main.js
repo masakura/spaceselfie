@@ -174,25 +174,32 @@ var app = {};
 
     this.camera.show();
   };
+
+  App.prototype.take = function () {
+    if (this.satellite.isChance()) {
+      this.camera.takeMap();
+    } else {
+      this.camera.takePicture();
+    }
+  };
+
+  App.prototype.start = function () {
+    this.satellite.start();
+  };
 })();
 
 $(document).ready(function () {
   'use strict';
 
   var a = new app.App();
-  var camera = a.camera;
   var satellite = a.satellite;
 
   $('#take').on('click', function () {
-    if (satellite.isChance()) {
-      camera.takeMap();
-    } else {
-      camera.takePicture();
-    }
+    a.take();
   });
 
   $('#satellite-start').on('click', function () {
-    satellite.start();
+    a.start();
   });
 
   $('#satellite-flight').on('click', function () {
