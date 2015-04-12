@@ -88,11 +88,11 @@ var app = {};
   };
 
   Map.prototype.show = function () {
-    this.$map.show();
+    this.$map.css('zIndex', 7);
   };
 
   Map.prototype.hide = function () {
-    // 裏に回すだけ!
+    this.$map.css('zIndex', 0);
   };
 
   navigator.getUserMedia =
@@ -133,6 +133,10 @@ var app = {};
     var context = $picture[0].getContext('2d');
     context.drawImage(this.$finder[0], 0, 0);
   };
+
+  Camera.prototype.takeMap = function () {
+    this.map.show();
+  };
 })();
 
 $(document).ready(function () {
@@ -148,15 +152,15 @@ $(document).ready(function () {
   });
 
   $('#take').on('click', function () {
-    camera.takePicture();
+    camera.takeMap();
   });
 
   $('#map-show').on('click', function () {
-    $('#map').css('zIndex', 7);
+    camera.map.show();
   });
 
   $('#map-hide').on('click', function () {
-    $('#map').css('zIndex', 0);
+    camera.map.hide();
   });
 
   $('#satellite-start').on('click', function () {
