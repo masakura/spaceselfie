@@ -23,24 +23,30 @@ var app = {};
     this.$satellite = $('#satellite');
   };
 
-  Satellite.prototype.start = function () {
+  Satellite.prototype.start = function (success) {
     var $satellite = this.$satellite;
 
     var top = 0;
     var id = setInterval(function () {
       top -= 20;
-      $satellite.css('top', top);
+      $satellite
+        .css('top', top)
+        .show();
 
       if ($satellite.height() + top < 0) {
         clearInterval(id);
         $satellite.hide();
+
+        if (success) {
+          success();
+        }
       }
     }, 100);
   };
 
   Satellite.prototype.flight = function () {
     var $satellite = this.$satellite;
-    var degree = 130;
+    var degree = 150;
     var that = this;
 
     var id = setInterval(function () {
@@ -55,7 +61,7 @@ var app = {};
 
       var top = 700 - (degree - app.degree) * 12;
       that.top = top;
-//      console.log('chance: ' + that.isChance() + ', offset: ' + that.offset + ', degree: ' + degree + ', top: ' + top);
+      console.log('chance: ' + that.isChance() + ', offset: ' + that.offset + ', degree: ' + degree + ', top: ' + top);
       $satellite
         .css('top', top)
         .show();
@@ -181,7 +187,7 @@ var app = {};
   };
 
   App.prototype.take = function () {
-    $('#shutter-sound').play();
+    $('#shutter-sound')[0].play();
 
     if (this.satellite.isChance()) {
       this.camera.takeMap();
@@ -191,7 +197,11 @@ var app = {};
   };
 
   App.prototype.start = function () {
-    this.satellite.start();
+    var satellite = this.satellite;
+
+    satellite.start(function () {
+      satellite.flight();
+    });
   };
 })();
 
@@ -199,7 +209,6 @@ $(document).ready(function () {
   'use strict';
 
   var a = new app.App();
-  var satellite = a.satellite;
 
   $('#take').on('click', function () {
     a.take();
@@ -207,9 +216,5 @@ $(document).ready(function () {
 
   $('#satellite-start').on('click', function () {
     a.start();
-  });
-
-  $('#satellite-flight').on('click', function () {
-    satellite.flight();
   });
 });
