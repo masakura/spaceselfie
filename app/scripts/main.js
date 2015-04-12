@@ -165,22 +165,34 @@ var app = {};
   Camera.prototype.takeMap = function () {
     this.map.show();
   };
+
+  var App = app.App = function () {
+    this.camera = new Camera();
+    this.camera.initialize();
+
+    this.satellite = new Satellite();
+  };
+
+  App.prototype.start = function () {
+    this.camera.show();
+  };
 })();
 
 $(document).ready(function () {
   'use strict';
 
-  var camera = new app.Camera();
-  camera.initialize();
+  var a = new app.App();
+  var camera = a.camera;
+  var satellite = a.satellite;
 
-  var satellite = new app.Satellite();
-
-  $('#start').on('click', function () {
-    camera.show();
-  });
+  a.start();
 
   $('#take').on('click', function () {
-    camera.takeMap();
+    if (satellite.isChance()) {
+      camera.takeMap();
+    } else {
+      camera.takePicture();
+    }
   });
 
   $('#map-show').on('click', function () {
