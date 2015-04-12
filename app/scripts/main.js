@@ -181,6 +181,8 @@ var app = {};
   };
 
   App.prototype.take = function () {
+    $('#shutter-sound').play();
+
     if (this.satellite.isChance()) {
       this.camera.takeMap();
     } else {
