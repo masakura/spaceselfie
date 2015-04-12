@@ -9,6 +9,15 @@
   z-index: 10;
 }
 
+#cross {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+  background-image: url(../resources/cross.png);
+  background-size: 100% 100%;
+}
+
 #finder {
   position: absolute;
   width: 30%;
@@ -82,9 +91,12 @@
 
 #satellite {
   position: absolute;
+  width: 100%;
   z-index: 14;
-  background-color: darkgreen;
-  right: 0;
-  width: 30%;
-  height: 30%;
+  text-align: center;
+}
+
+#satellite img {
+  width: 50%;
+  height: 50%;
 }
